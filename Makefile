@@ -1,6 +1,7 @@
 
 SRC   := $(wildcard draft-*.md)
 TXT   := $(patsubst %.md,%.txt,$(SRC))
+HTML  := $(patsubst %.md,%.html,$(SRC))
 CWD   := $(shell pwd)
 MMARK := $(CWD)/mmark/mmark
 

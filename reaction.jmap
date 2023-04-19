@@ -1,0 +1,87 @@
+{
+  "id": null,
+  "blobId": null,
+  "threadId": "some-thread-id@example.com",
+  "receivedAt": "2023-04-19T14:12:57.625269",
+  "messageId": [
+    "some-message-id@example.com"
+  ],
+  "inReplyTo": [
+    "message-id-that-i-agree-with@example.com"
+  ],
+  "from": [
+    "alice@example.com"
+  ],
+  "to": [
+    "bob@example.com"
+  ],
+  "subject": "👍",
+  "sentAt": "2023-04-19T10:37:20+00:00",
+  "headers": [
+    {
+      "name": "Return-Path",
+      "value": "<alice@example.com>"
+    },
+    {
+      "name": "Date",
+      "value": "Wed, 19 Apr 2023 10:37:20 +0000"
+    },
+    {
+      "name": "From",
+      "value": "Alice <alice@example.com>"
+    },
+    {
+      "name": "To",
+      "value": "Bob <bob@example.com>"
+    },
+    {
+      "name": "Message-ID",
+      "value": "<some-message-id@example.com>"
+    },
+    {
+      "name": "Root-Content-Id",
+      "value": "0"
+    },
+    {
+      "name": "Thread-ID",
+      "value": "<some-thread-id@example.com>"
+    },
+    {
+      "name": "In-Reply-To",
+      "value": "<message-id-that-i-agree-with@example.com>"
+    },
+    {
+      "name": "Mime-Version",
+      "value": "1.0"
+    },
+    {
+      "name": "Content-Type",
+      "value": "multipart/mixed; boundary=\"--==_mimepart_643fc460d781e_113a2486333\"; charset=\"UTF-8\""
+    },
+    {
+      "name": "Content-Transfer-Encoding",
+      "value": "8bit"
+    },
+    {
+      "name": "Subject",
+      "value": "👍"
+    }
+  ],
+  "textBody": [
+    {
+      "blobId": null,
+      "size": null,
+      "type": "text/plain",
+      "charset": "utf-8",
+      "content": "My reaction to your message is: 👍 (THUMBS UP SIGN, U+1F44D)\n"
+    }
+  ],
+  "rootBody": {
+    "blobId": null,
+    "size": null,
+    "type": "application/json",
+    "content": "{\"namespace\": \"https://ietf.org/mimi/v1/schema\", \"name\": \"reaction\", \"content\": \"👍\"}\n"
+  },
+  "hasAttachment": false,
+  "preview": ""
+}

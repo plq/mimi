@@ -4,10 +4,11 @@ abbrev = "Title"
 ipr = "none"
 submissiontype = "independent"
 keyword = [""]
+workgroup = "MIMI"
 
 [seriesInfo]
 name = "Internet-Draft"
-value = "draft-00"
+value = "draft-mimi"
 stream = "independent"
 status = "informational"
 
@@ -15,7 +16,7 @@ status = "informational"
 initials = "B."
 surname = "Arslan"
 fullname = "Burak Arslan"
-organization = "Soba Yazılım AŞ"
+organization = "Soba Yazılım A.Ş."
   [author.address]
    email = "burak@soba.email"
 
@@ -24,13 +25,12 @@ organization = "Soba Yazılım AŞ"
 
 .# Abstract
 
-Abstract
+This document describes a general purpose messaging format that is flexible
+enough to capture the semantics of incumbent messaging formats like MIME or XMPP
+or non-standard protocols like those of apps like WhatsApp, Signal, etc.
+It can be used as the payload format inside an MLS session.
 
 {mainmatter}
-
-# Introduction
-
-Introduction
 
 # Conventions and Definitions
 
@@ -43,46 +43,123 @@ The reader may wish to note that one of the two RFC references in the
 preceding paragraph was normative; the other was informative. These will
 be correctly identified as such in the References section below.
 
-# Background
+# Introduction
 
-Background
+Compatibility with existing email systems is a nice property to have. The email
+infrastructure is distributed, has important features like anti-spam built-in,
+and most email clients are robust and feature-rich, built with long-term
+archival in mind.
 
-# Use Cases {#usecases}
+MIME is still the standard format in email exchange. It definitely shows its
+age (it's rather complex to implement, text-only, self-contained, etc)
+but otherwise stood the test of time so could very well form the basis of a next
+generation messaging format.
 
-Use cases
+The JMAP Email object [@!RFC8621]\(§.4\) is one such attempt -- it simplifies
+MIME processing by shedding obsolete features like support for non-unicode
+character encodings but keeps defining features like being text-only and
+recursive structure. The JMAP protocol also adds blob support which adds an
+alternate transport for binary data, which not only dramatically lowers the
+impact of using a text-only format, but also makes it possible to bundle
+arbitrary size or amount of attachments together.
 
-## First use case
+However, email lacks structure, except in very niche applications like meeting
+requests, which renders it non-suitable for most of instant messaging
+applications.
 
-Some text about the first use case. (And an example of using a second level
-heading.)
+The history of instant messaging so far makes it obvious that it's not possible
+to foresee all actions a client may implement. For example, at the height of its
+popularity, the MSN client famously let its users shake the windows of their
+peers. WhatsApp was very good at sending plain-text messages, but Snapchat came
+up with stickers and expiring messages, which other clients eventually had to
+implement.
 
-## Second use case
+Any system that seeks to unify message exchange must be flexible enough to
+capture and encode any current and future needs of messaging applications.
 
-This example includes a list:
+We propose the MIMI-INK format, message/mimi-ink, to be renamed to message/mimi
+if it gets standardized, which is made of the following primitives:
 
-- first item
-- second item
-- third item
+1. A dict of headers. It "MUST" contain the defining entry named
+   "Root-Content-Id", among other ones.
+2. An optional message body in any number of formats. It's supposed to summarize
+   the purpose of the message for clients that don't support the attached
+   structure, though of course it can be anything.
+3. At least one blob that contains the main data structure with
+   ``Content-Id: [Root-Content-Id-Value]`` defined in the message headers.
+4. Zero or more additional blobs that may be referenced from inside the main
+   structure for any reason.
 
-And text below the list.
+In MIME terms;
 
-## Third use case
+- headers with at least Root-Content-Id: XYZ and Content-Type: message/mimi
+- multipart/mixed
+    - multipart/alternative
+        - text/html
+        - text/plain
+        - etc.
+    - multipart/mixed
+        - one of application/{xml,json,msgpack,etc} with content-id="XYZ"
+        - one or more binary objects
 
-This use case includes some ascii art.  The format for this art is as follows:
+The root content must at least denote a namespace, name and actual content.
+An optional errorcode could also be included, if the content designates an
+error message. The client "MUST" validate the content according to the
+information given in namespace/name values and refuse to process the message by
+resorting to interpret it a regular email message with attachments.
 
-~~~ ascii-art
-        0
-       +-+
-       |A|
-       +-+
-~~~
+Some examples:
 
-# Security Considerations
+- https://github.com/plq/mimi/blob/main/reaction.eml
+- https://github.com/plq/mimi/blob/main/vibrate.eml
 
-Very secure. Much fun.
+
+This boils down to the following key differences to the JMAP Email object:
+
+1. Uses msgpack for the outermost layer instead of JSON.
+2. Force the inner layer(s) to represent an abstract structure, serialized as
+   any popular format (json, xml, msgpack, etc.)
+3. Add an XML-like namespacing structure so that inner layers can coexist with
+   both standards-compliant and proprietary objects.
+4. Using a message body with a well-defined structure makes the recursivity of
+   the outer layer redundant. This of structure can be realized inside the
+   payload.
+
+# Rationale
+
+## Msgpack
+
+msgpack is;
+
+1. Binary
+2. Simple to implement: Here's an implementation in ~400 lines of python:
+   https://github.com/plq/msgpack-python-pure/blob/master/msgpack_pure/_core.py
+3. Supports enough primitives to be useful: null, true, false, int64, uint64,
+   float32, float64, string, bytearray, list, map
+4. Doesn't overstep its boundaries by defining complex types like Date
+
+If there is a simpler binary format that provides equivalent functionality,
+it could be adopted instead.
+
+msgpack is doesn't have a standard way of defining a schema.
+
+## Non-recursive format
+
+TBD:
+
+- Recursive formats like MIME add a great deal of flexibility to the wrong
+  layer.
+- MIMI needs to be as simple as possible by pushing the complexity to the inner
+  layers.
+
+# Content
+
+## Object definitions
+
+## Validation
 
 # IANA Considerations
 
-This document has no IANA actions.
+This document may need IANA to maintain a supported MIMI object types registry
 
 {backmatter}

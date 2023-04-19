@@ -1,0 +1,27 @@
+Return-Path: <alice@example.com>
+Date: Wed, 19 Apr 2023 10:37:20 +0000
+From: Alice <alice@example.com>
+To: Bob <bob@example.com>
+Message-ID: <some-message-id@example.com>
+Root-Content-Id: 0
+Thread-ID: <some-thread-id@example.com>
+In-Reply-To: <message-id-that-i-agree-with@example.com>
+Mime-Version: 1.0
+Content-Type: message/mimi;
+ boundary="--==_mimepart_643fc460d781e_113a2486333";
+ charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Subject: 👍
+
+----==_mimepart_643fc460d781e_113a2486333
+Content-Type: text/plain; charset=UTF-8
+
+My reaction to your message is: 👍 (THUMBS UP SIGN, U+1F44D)
+
+----==_mimepart_643fc460d781e_113a2486333
+Content-Type: application/json
+Content-Id: 0
+
+{"namespace": "https://ietf.org/mimi/v1/schema", "name": "reaction", "content": "👍"}
+
+----==_mimepart_643fc460d781e_113a2486333--

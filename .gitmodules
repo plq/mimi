@@ -1,3 +1,8 @@
 [submodule "mmark"]
 	path = mmark
 	url = https://github.com/mmarkdown/mmark
+
+[submodule "jmapd"]
+	path = jmapd
+	url = https://github.com/plq/jmapd
+

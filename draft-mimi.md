@@ -1,6 +1,6 @@
 %%%
-title = "Title"
-abbrev = "Title"
+title = "MIMI Specification"
+abbrev = "MIMI"
 ipr = "none"
 submissiontype = "independent"
 keyword = [""]
@@ -114,7 +114,7 @@ Some examples:
 - https://github.com/plq/mimi/blob/main/vibrate.eml
 
 
-This boils down to the following key differences to the JMAP Email object:
+This boils down to the following key differences with the JMAP Email object:
 
 1. Uses msgpack for the outermost layer instead of JSON.
 2. Force the inner layer(s) to represent an abstract structure, serialized as
@@ -138,12 +138,21 @@ msgpack is;
    float32, float64, string, bytearray, list, map
 4. Doesn't overstep its boundaries by defining complex types like Date
 
+However, there is stuff that needs to be further/better specified:
+
+1. msgpack doesn't have a standard way of defining a schema.
+2. As said above, there is no standard way of serializing complex objects like
+   dates
+3. It's very easy to prepend Received: headers to MIME, which makes it very
+   easy to trace its origins. Patching msgpack like this doesn't seem practical.
+   However, it's quite easy to tell concatenated msgpack objects apart. So it
+   may be possible to specify MIMI as a bunch of concatenated msgpack objects
+   instead of just one object containing everything.
+
 If there is a simpler binary format that provides equivalent functionality,
-it could be adopted instead.
+it could be adopted instead. msgpack is not a hard requirement.
 
-msgpack is doesn't have a standard way of defining a schema.
-
-## Non-recursive format
+## Doing away with recursivity
 
 TBD:
 
@@ -156,10 +165,14 @@ TBD:
 
 ## Object definitions
 
+The fun part: What objects to specify. Why?
+
 ## Validation
+
+How to validate incoming content?
 
 # IANA Considerations
 
-This document may need IANA to maintain a supported MIMI object types registry
+This document may need IANA to maintain a supported MIMI object types registry.
 
 {backmatter}

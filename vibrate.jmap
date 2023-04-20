@@ -2,12 +2,9 @@
   "id": null,
   "blobId": null,
   "threadId": "some-thread-id@example.com",
-  "receivedAt": "2023-04-20T11:51:59.669676",
+  "receivedAt": "2023-04-20T20:49:24.628933",
   "messageId": [
     "some-message-id@example.com"
-  ],
-  "inReplyTo": [
-    null
   ],
   "from": [
     "alice@example.com"

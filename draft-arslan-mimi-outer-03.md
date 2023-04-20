@@ -65,7 +65,7 @@ character encodings but keeps defining features like being text-only and
 recursive structure. The JMAP protocol also adds blob support which adds an
 alternate transport for binary data, which not only dramatically lowers the
 impact of using a text-only format, but also makes it possible to bundle
-arbitrary size or amount of attachments together.
+arbitrary size or number of attachments together.
 
 However, email lacks structure, except in very niche applications like meeting
 requests, which renders it non-suitable for most of instant messaging

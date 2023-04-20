@@ -6,3 +6,6 @@
 	path = jmapd
 	url = https://github.com/plq/jmapd
 
+[submodule "msgpack-python-pure"]
+	path = msgpack-python-pure
+	url = https://github.com/plq/msgpack-python-pure

@@ -63,7 +63,6 @@ for fn in sys.argv[1:]:
         headers=[EmailHeader(name=k, value=v) for k, v in message.items()],
         thread_id=strip_angle(message["Thread-Id"]),
         message_id=[strip_angle(message["Message-Id"])],
-        in_reply_to=[strip_angle(message["In-Reply-To"])],
         from_=[addr.address for addr in from_],
         to=[addr.address for addr in to],
         subject=message["subject"],
@@ -72,6 +71,10 @@ for fn in sys.argv[1:]:
         text_body=[text_body],
         root_body=root_body,
     )
+
+    irt = strip_angle(message["In-Reply-To"])
+    if irt is not None:
+        email.in_reply_to = [irt]
 
     if as_msgpack:
         #

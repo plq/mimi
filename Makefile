@@ -21,7 +21,7 @@ all: $(TXT) $(HTML)
 
 %.xml: %.md $(MMARK)
 	$(MMARK) $< > $@
-	-tidy -indent -xml -quiet -wrap 80 < $@ > $@.tmp && mv $@.tmp $@
+	-tidy -indent -xml -quiet -wrap 80 < $@ > $@.tmp && mv $@.tmp $@ || rm $@.tmp
 
 $(MMARK):
 	cd mmark && go build
@@ -34,13 +34,19 @@ xml2rfc: venv/bin/xml2rfc
 venv/bin/xml2rfc: venv/bin/activate
 	source venv/bin/activate && pip install xml2rfc
 
+venv/bin/msgpack_decode: venv/bin/activate
+	source venv/bin/activate && cd msgpack-python-pure && python setup.py develop
+
 jmap: reaction.jmap reaction.jmap.msgpack vibrate.jmap vibrate.jmap.msgpack
 
 %.jmap: %.eml venv eml-to-jmap.py
 	source venv/bin/activate && ./eml-to-jmap.py $< > $@
 
-%.jmap.msgpack: %.eml venv eml-to-jmap.py
+%.jmap.msgpack: %.eml venv eml-to-jmap.py venv/bin/msgpack_decode
 	source venv/bin/activate && ./eml-to-jmap.py -m $< > $@
+ifeq ($(V), 1)
+	source venv/bin/activate && msgpack_decode $@
+endif
 
 venv: venv/bin/activate
 

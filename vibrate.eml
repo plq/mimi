@@ -21,6 +21,6 @@ Request to vibrate the application window.
 ----==_mimepart_643fc460d781e_113a2486333
 Content-Type: application/xml
 
-<?xml version="1.0" encoding="UTF-8"?><vibrate xmlns="https://ietf.org/mimi/v1/schema" />
+<?xml version="1.0" encoding="UTF-8"?><vibrate xmlns="https://microsoft.com/schema/msn/v3/" />
 
 ----==_mimepart_643fc460d781e_113a2486333--

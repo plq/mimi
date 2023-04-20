@@ -30,7 +30,10 @@ for fn in sys.argv[1:]:
         continue
 
     with open(fn, "rb") as fp:
-        patched = BytesIO(fp.read().replace(b"message/mimi-ink", b"multipart/mixed", 1))
+        fdata = fp.read()
+        # without this, the python email parser won't parse the message body
+        fdata = fdata.replace(b"message/mimi-ink;", b"multipart/mixed;", 1)
+        patched = BytesIO(fdata)
 
     message = BytesParser(policy=default).parse(patched)
 

@@ -136,7 +136,7 @@ interest.
 
 JMAP standard specifies JSON as serialization format. We think JSON has some
 fundamental shortcomings like missing an integer type or being text-only.
-So we propose the msgpack format as serialization format for MIME-INK.
+So we propose the msgpack format as serialization format for MIMI-INK.
 
 Some other key differences with the JMAP Email object are as follows:
 

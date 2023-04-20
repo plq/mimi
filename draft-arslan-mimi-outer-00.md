@@ -1,15 +1,16 @@
 %%%
-title = "MIMI Specification"
-abbrev = "MIMI"
-ipr = "none"
-submissiontype = "independent"
-keyword = [""]
+title = "More Instant Messaging Interoperability (MIMI) Outer Layer"
+abbrev = "MIMI Outer"
+ipr = "trust200902"
+submissiontype = "IETF"
+keyword = ["Internet-Draft", "mimi", "json", "xml", "mime", "msgpack", "jmap"]
 workgroup = "MIMI"
+category = "info"
 
 [seriesInfo]
 name = "Internet-Draft"
-value = "draft-mimi"
-stream = "independent"
+value = "draft-arslan-mimi-outer-00"
+stream = "IETF"
 status = "informational"
 
 [[author]]
@@ -17,8 +18,11 @@ initials = "B."
 surname = "Arslan"
 fullname = "Burak Arslan"
 organization = "Soba Yazılım A.Ş."
+
   [author.address]
    email = "burak@soba.email"
+  [author.address.postal]
+   country = "Turkey"
 
 %%%
 
@@ -46,8 +50,8 @@ be correctly identified as such in the References section below.
 # Introduction
 
 Compatibility with existing email systems is a nice property to have. The email
-infrastructure is distributed, has important features like anti-spam built-in,
-and most email clients are robust and feature-rich, built with long-term
+infrastructure is distributed, tries to deal with the spam problem using its own
+means and most email clients are robust and feature-rich, built with long-term
 archival in mind.
 
 MIME is still the standard format in email exchange. It definitely shows its

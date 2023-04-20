@@ -21,6 +21,7 @@ all: $(TXT) $(HTML)
 
 %.xml: %.md $(MMARK)
 	$(MMARK) $< > $@
+	-tidy -indent -xml -quiet -wrap 80 < $@ > $@.tmp && mv $@.tmp $@
 
 $(MMARK):
 	cd mmark && go build

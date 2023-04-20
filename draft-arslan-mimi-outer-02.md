@@ -141,7 +141,7 @@ So we propose the msgpack format as serialization format for MIME-INK.
 Some other key differences with the JMAP Email object are as follows:
 
 1. The "content" property was added to represent inline data where appropriate.
-2. The root content needs to represent an abstract structure, serialized as
+2. The root content "MUST" represent an abstract structure, serialized as
    any popular format (json, xml, msgpack, etc.).
 3. An XML-like namespacing structure needs to be specified so that both
    standards-compliant and proprietary objects can coexist. (Forcing the inner

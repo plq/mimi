@@ -9,7 +9,7 @@ category = "info"
 
 [seriesInfo]
 name = "Internet-Draft"
-value = "draft-arslan-mimi-outer-01"
+value = "draft-arslan-mimi-outer-02"
 stream = "IETF"
 status = "informational"
 
@@ -59,7 +59,7 @@ age (it's rather complex to implement, text-only, self-contained, etc)
 but otherwise stood the test of time so could very well form the basis of a next
 generation messaging format.
 
-The JMAP Email object [@!RFC8621]\(§.4\) is one such attempt -- it simplifies
+The JMAP[@!RFC8621] Email object \(§.4\) is one such attempt -- it simplifies
 MIME processing by shedding obsolete features like support for non-unicode
 character encodings but keeps defining features like being text-only and
 recursive structure. The JMAP protocol also adds blob support which adds an
@@ -131,10 +131,10 @@ Corresponding objects serialized as MIME:
 The mimi repository above contains software that converts the MIME structure
 to the proposed JMAP structure. It is assumed that there is a 1-to-1 releation
 between the MIME representation and the JMAP representation of a message, even
-though that's not correct -- whatever gets lost in translations is not of
+though that's not correct -- whatever gets lost in translation is not of
 interest.
 
-JMAP standard specifies JSON as serialization format. We think has some
+JMAP standard specifies JSON as serialization format. We think JSON has some
 fundamental shortcomings like missing an integer type or being text-only.
 So we propose the msgpack format as serialization format for MIME-INK.
 

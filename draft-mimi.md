@@ -70,7 +70,7 @@ applications.
 The history of instant messaging so far makes it obvious that it's not possible
 to foresee all actions a client may implement. For example, at the height of its
 popularity, the MSN client famously let its users shake the windows of their
-peers. WhatsApp was very good at sending plain-text messages, but Snapchat came
+peers. WhatsApp is very good at sending plain-text messages, but Snapchat came
 up with stickers and expiring messages, which other clients eventually had to
 implement.
 
@@ -87,12 +87,13 @@ if it gets standardized, which is made of the following primitives:
    structure, though of course it can be anything.
 3. At least one blob that contains the main data structure with
    ``Content-Id: [Root-Content-Id-Value]`` defined in the message headers.
+   This is called the "root content".
 4. Zero or more additional blobs that may be referenced from inside the main
    structure for any reason.
 
 In MIME terms;
 
-- headers with at least Root-Content-Id: XYZ and Content-Type: message/mimi
+- headers with at least Root-Content-Id: XYZ and Content-Type: message/mimi-ink
 - multipart/mixed
     - multipart/alternative
         - text/html
@@ -113,17 +114,25 @@ Some examples:
 - https://github.com/plq/mimi/blob/main/reaction.eml
 - https://github.com/plq/mimi/blob/main/vibrate.eml
 
+We omitted non-essential JMAP properties for the sake of simplicity.
 
-This boils down to the following key differences with the JMAP Email object:
+The mimi-ink repository contains software that converts the MIME structure
+to the suggested jmap structure. It is assumed that there is a 1-to-1 releation
+between the MIME representation and the JMAP representation of a message, even
+though that's not correct -- whatever gets lost in translations is not of interest.
+
+The following key differences exist with the JMAP Email object:
 
 1. Uses msgpack for the outermost layer instead of JSON.
-2. Force the inner layer(s) to represent an abstract structure, serialized as
-   any popular format (json, xml, msgpack, etc.)
-3. Add an XML-like namespacing structure so that inner layers can coexist with
-   both standards-compliant and proprietary objects.
-4. Using a message body with a well-defined structure makes the recursivity of
-   the outer layer redundant. This of structure can be realized inside the
-   payload.
+2. The "content" property was added to represent inline data.
+2. The root content needs to represent an abstract structure, serialized as
+   any popular format (json, xml, msgpack, etc.).
+3. Add an XML-like namespacing structure so that both standards-compliant
+   and proprietary objects can coexist. Or force the inner layer to be XML?
+4. Not technically a difference, but: Using a message body with a
+   well-defined structure makes the recursivity of
+   the outer layer (JMAP/MIME) redundant. This kind of structure can be
+   realized inside the payload.
 
 # Rationale
 

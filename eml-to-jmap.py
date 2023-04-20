@@ -57,6 +57,7 @@ for fn in sys.argv[1:]:
         if c["Content-Id"] == message["Root-Content-Id"]:
             root_body.type = c.get_content_type()
             root_body.content = c.get_content()
+            root_body.cid = c["Content-Id"]
 
     email = Email(
         headers=[EmailHeader(name=k, value=v) for k, v in message.items()],

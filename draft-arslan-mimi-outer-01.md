@@ -9,7 +9,7 @@ category = "info"
 
 [seriesInfo]
 name = "Internet-Draft"
-value = "draft-arslan-mimi-outer-00"
+value = "draft-arslan-mimi-outer-01"
 stream = "IETF"
 status = "informational"
 
@@ -20,9 +20,9 @@ fullname = "Burak Arslan"
 organization = "Soba Yazılım A.Ş."
 
   [author.address]
-   email = "burak@soba.email"
-  [author.address.postal]
-   country = "Turkey"
+  email = "burak@soba.email"
+      [author.address.postal]
+      country = "Turkey"
 
 %%%
 
@@ -84,7 +84,7 @@ capture and encode any current and future needs of messaging applications.
 # MIMI-INK format
 
 We propose the MIMI-INK format, message/mimi-ink, to be renamed to message/mimi
-if it gets standardized, which is made of the following primitives:
+if it gets standardized, which is made of the following elements:
 
 1. A dict of headers. It "MUST" contain the defining entry named
    "Root-Content-Id", among other ones.
@@ -99,15 +99,16 @@ if it gets standardized, which is made of the following primitives:
 
 In MIME terms;
 
-- headers with at least Root-Content-Id: XYZ and Content-Type: message/mimi-ink
+- headers with at least ``Root-Content-Id: XYZ`` and
+  ``Content-Type: message/mimi-ink``
 - multipart/mixed
     - multipart/alternative
         - text/html
         - text/plain
         - etc.
     - multipart/mixed
-        - one of application/{xml,json,msgpack,etc} with content-id="XYZ"
-        - one or more binary objects
+        - one of application/{xml,json,msgpack,etc} with ``Content-Id="XYZ"``
+        - zero or more binary objects
 
 The root content must at least denote a namespace, name and actual content.
 An optional errorcode could also be included, if the content designates an
@@ -115,31 +116,39 @@ error message. The client "MUST" validate the content according to the
 information given in namespace/name values and refuse to process the message by
 resorting to interpret it a regular email message with attachments.
 
-Some examples:
+Some examples of this structure serialized as JMAP are as follows:
+
+- https://github.com/plq/mimi/blob/main/reaction.jmap
+- https://github.com/plq/mimi/blob/main/vibrate.jmap
+
+We omitted non-essential JMAP properties for sake of simplicity.
+
+Corresponding objects serialized as MIME:
 
 - https://github.com/plq/mimi/blob/main/reaction.eml
 - https://github.com/plq/mimi/blob/main/vibrate.eml
 
-We omitted non-essential JMAP properties for sake of simplicity.
-
-The mimi-ink repository contains software that converts the MIME structure
-to the suggested jmap structure. It is assumed that there is a 1-to-1 releation
+The mimi repository above contains software that converts the MIME structure
+to the proposed JMAP structure. It is assumed that there is a 1-to-1 releation
 between the MIME representation and the JMAP representation of a message, even
 though that's not correct -- whatever gets lost in translations is not of
 interest.
 
-The following key differences exist with the JMAP Email object:
+JMAP standard specifies JSON as serialization format. We think has some
+fundamental shortcomings like missing an integer type or being text-only.
+So we propose the msgpack format as serialization format for MIME-INK.
 
-1. Uses msgpack for the outermost layer instead of JSON.
-2. The "content" property was added to represent inline data where appropriate.
+Some other key differences with the JMAP Email object are as follows:
+
+1. The "content" property was added to represent inline data where appropriate.
 2. The root content needs to represent an abstract structure, serialized as
    any popular format (json, xml, msgpack, etc.).
-3. Add an XML-like namespacing structure so that both standards-compliant
-   and proprietary objects can coexist. Or force the inner layer to be XML?
-4. Not technically a difference, but: Using a message body with a
-   well-defined structure makes the recursivity of
-   the outer layer (JMAP/MIME) redundant. This kind of structure can be
-   realized inside the payload.
+3. An XML-like namespacing structure needs to be specified so that both
+   standards-compliant and proprietary objects can coexist. (Forcing the inner
+   layer format to be XML is a good first step.)
+4. Using a message body with a well-defined structure makes the recursivity of
+   the outer layer (JMAP/MIME) redundant. This kind of structure can be realized
+   inside the payload.
 
 # Rationale
 
@@ -160,11 +169,11 @@ However, there is stuff that needs to be further/better specified:
    imitate the relevant bits of XSD.
 2. As said above, there is no standard way of serializing complex objects like
    dates.
-3. It's very easy to prepend headers to MIME, which eg. makes it very easy to
-   trace its origins via ``Received`` headers. "Patching" msgpack like this
-   doesn't seem practical. However, it's quite easy to tell concatenated msgpack
-   objects apart. So it may be desirable to specify MIMI as a bunch of
-   concatenated msgpack objects instead of just one object containing
+3. It's very easy to prepend additional headers to MIME, which eg. makes it
+   very easy to trace its origins via ``Received`` headers. "Patching" msgpack
+   like this doesn't seem practical. However, it's quite easy to tell
+   concatenated msgpack objects apart. So it may be desirable to specify MIMI as
+   a bunch of concatenated msgpack objects instead of just one object containing
    everything.
 
 If there is a simpler binary format that provides equivalent functionality,
@@ -173,12 +182,18 @@ have interesting properties that make it a strong contender.
 
 ## Doing away with recursivity
 
+A MIME/JMAP object can contain an infinite amount of message parts, which can
+also contain child message parts. We think:
+
 - Recursive formats like MIME/JMAP add a great deal of flexibility to the wrong
   layer.
 - MIMI outer shell needs to be as simple as possible. If a complex message
   bundle is needed, it can be easily expressed by the inner structure(s).
 - MIMI objects can be nested as attachments and the clients could choose to
   interpret it further down anyway.
+
+That's why preventing the sub parts from containing further elements could make
+sense in order to keep the implementations as simple as possible.
 
 # Content
 

@@ -2,7 +2,7 @@
   "id": null,
   "blobId": null,
   "threadId": "some-thread-id@example.com",
-  "receivedAt": "2023-04-19T14:12:57.625269",
+  "receivedAt": "2023-04-20T11:51:57.379745",
   "messageId": [
     "some-message-id@example.com"
   ],
@@ -80,6 +80,7 @@
     "blobId": null,
     "size": null,
     "type": "application/json",
+    "cid": "0",
     "content": "{\"namespace\": \"https://ietf.org/mimi/v1/schema\", \"name\": \"reaction\", \"content\": \"👍\"}\n"
   },
   "hasAttachment": false,

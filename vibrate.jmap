@@ -2,7 +2,7 @@
   "id": null,
   "blobId": null,
   "threadId": "some-thread-id@example.com",
-  "receivedAt": "2023-04-20T07:44:47.293059",
+  "receivedAt": "2023-04-20T11:51:59.669676",
   "messageId": [
     "some-message-id@example.com"
   ],
@@ -69,13 +69,15 @@
       "size": null,
       "type": "text/plain",
       "charset": "utf-8",
-      "content": "Request to vibrate the application window.\n\n"
+      "content": "Request to vibrate the application window.\n"
     }
   ],
   "rootBody": {
     "blobId": null,
     "size": null,
-    "type": null
+    "type": "application/xml",
+    "cid": "0",
+    "content": "<?xml version=\"1.0\" encoding=\"UTF-8\"?><vibrate xmlns=\"https://microsoft.com/schema/msn/v3/\" />\n"
   },
   "hasAttachment": false,
   "preview": ""

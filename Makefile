@@ -9,6 +9,7 @@ MMARK := $(CWD)/mmark/mmark
 IGNORE := $(shell mkdir -p $(HOME)/.cache/xml2rfc)
 
 .PHONY: all clean jmap venv
+.PRECIOUS: %.xml
 
 all: $(TXT) $(HTML)
 

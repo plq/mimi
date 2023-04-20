@@ -17,9 +17,9 @@ Content-Type: text/plain; charset=UTF-8
 
 Request to vibrate the application window.
 
-
 ----==_mimepart_643fc460d781e_113a2486333
 Content-Type: application/xml
+Content-Id: 0
 
 <?xml version="1.0" encoding="UTF-8"?><vibrate xmlns="https://microsoft.com/schema/msn/v3/" />
 

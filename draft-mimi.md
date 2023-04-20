@@ -77,12 +77,14 @@ implement.
 Any system that seeks to unify message exchange must be flexible enough to
 capture and encode any current and future needs of messaging applications.
 
+# MIMI-INK format
+
 We propose the MIMI-INK format, message/mimi-ink, to be renamed to message/mimi
 if it gets standardized, which is made of the following primitives:
 
 1. A dict of headers. It "MUST" contain the defining entry named
    "Root-Content-Id", among other ones.
-2. An optional message body in any number of formats. It's supposed to summarize
+2. An optional message body in any number of formats. It's supposed to describe
    the purpose of the message for clients that don't support the attached
    structure, though of course it can be anything.
 3. At least one blob that contains the main data structure with
@@ -114,17 +116,18 @@ Some examples:
 - https://github.com/plq/mimi/blob/main/reaction.eml
 - https://github.com/plq/mimi/blob/main/vibrate.eml
 
-We omitted non-essential JMAP properties for the sake of simplicity.
+We omitted non-essential JMAP properties for sake of simplicity.
 
 The mimi-ink repository contains software that converts the MIME structure
 to the suggested jmap structure. It is assumed that there is a 1-to-1 releation
 between the MIME representation and the JMAP representation of a message, even
-though that's not correct -- whatever gets lost in translations is not of interest.
+though that's not correct -- whatever gets lost in translations is not of
+interest.
 
 The following key differences exist with the JMAP Email object:
 
 1. Uses msgpack for the outermost layer instead of JSON.
-2. The "content" property was added to represent inline data.
+2. The "content" property was added to represent inline data where appropriate.
 2. The root content needs to represent an abstract structure, serialized as
    any popular format (json, xml, msgpack, etc.).
 3. Add an XML-like namespacing structure so that both standards-compliant
@@ -149,39 +152,46 @@ msgpack is;
 
 However, there is stuff that needs to be further/better specified:
 
-1. msgpack doesn't have a standard way of defining a schema.
+1. msgpack doesn't have a standard way of defining a schema. We could just
+   imitate the relevant bits of XSD.
 2. As said above, there is no standard way of serializing complex objects like
-   dates
-3. It's very easy to prepend Received: headers to MIME, which makes it very
-   easy to trace its origins. Patching msgpack like this doesn't seem practical.
-   However, it's quite easy to tell concatenated msgpack objects apart. So it
-   may be possible to specify MIMI as a bunch of concatenated msgpack objects
-   instead of just one object containing everything.
+   dates.
+3. It's very easy to prepend headers to MIME, which eg. makes it very easy to
+   trace its origins via ``Received`` headers. "Patching" msgpack like this
+   doesn't seem practical. However, it's quite easy to tell concatenated msgpack
+   objects apart. So it may be desirable to specify MIMI as a bunch of
+   concatenated msgpack objects instead of just one object containing
+   everything.
 
 If there is a simpler binary format that provides equivalent functionality,
-it could be adopted instead. msgpack is not a hard requirement.
+it could be adopted instead. msgpack is not a hard requirement here but does
+have interesting properties that make it a strong contender.
 
 ## Doing away with recursivity
 
-TBD:
-
-- Recursive formats like MIME add a great deal of flexibility to the wrong
+- Recursive formats like MIME/JMAP add a great deal of flexibility to the wrong
   layer.
-- MIMI needs to be as simple as possible by pushing the complexity to the inner
-  layers.
+- MIMI outer shell needs to be as simple as possible. If a complex message
+  bundle is needed, it can be easily expressed by the inner structure(s).
+- MIMI objects can be nested as attachments and the clients could choose to
+  interpret it further down anyway.
 
 # Content
 
 ## Object definitions
 
-The fun part: What objects to specify. Why?
+When specified in onion-like layers like this, the object definitions become the
+subject of another standard. It's off-topic here.
 
 ## Validation
 
-How to validate incoming content?
+To standardize how clients could validate incoming content, we need to specify
+or choose a schema language first. XML is the clear winner as the inner format
+here as it already has everything, including widespread software support.
 
 # IANA Considerations
 
-This document may need IANA to maintain a supported MIMI object types registry.
+The inner format may require IANA to maintain a supported MIMI object types
+registry.
 
 {backmatter}

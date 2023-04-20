@@ -6,7 +6,7 @@ Message-ID: <some-message-id@example.com>
 Root-Content-Id: 0
 Thread-ID: <some-thread-id@example.com>
 Mime-Version: 1.0
-Content-Type: message/mimi;
+Content-Type: message/mimi-ink;
  boundary="--==_mimepart_643fc460d781e_113a2486333";
  charset=UTF-8
 Content-Transfer-Encoding: 8bit

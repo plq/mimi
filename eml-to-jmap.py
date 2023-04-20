@@ -30,7 +30,7 @@ for fn in sys.argv[1:]:
         continue
 
     with open(fn, "rb") as fp:
-        patched = BytesIO(fp.read().replace(b"message/mimi", b"multipart/mixed", 1))
+        patched = BytesIO(fp.read().replace(b"message/mimi-ink", b"multipart/mixed", 1))
 
     message = BytesParser(policy=default).parse(patched)
 

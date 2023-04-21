@@ -84,7 +84,7 @@ capture and encode any current and future needs of messaging applications.
 # MIMI-INK format
 
 We propose the MIMI-INK format, message/mimi-ink, to be renamed to message/mimi
-if it gets standardized, which is made of the following elements:
+if it gets standardized, which is made of following elements:
 
 1. A dict of headers. It "MUST" contain the defining entry named
    "Root-Content-Id", among other ones.

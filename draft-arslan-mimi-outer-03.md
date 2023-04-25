@@ -74,9 +74,9 @@ applications.
 The history of instant messaging so far makes it obvious that it's not possible
 to foresee all actions a client may implement. For example, at the height of its
 popularity, the MSN client famously let its users shake the windows of their
-peers. WhatsApp is very good at sending plain-text messages, but Snapchat came
-up with stickers and expiring messages, which other clients eventually had to
-implement.
+peers. WhatsApp is very good at sending plain-text messages, but e.g. Line came
+up with stickers and Snapchat came up with expiring messages, which other clients
+had to eventually implement.
 
 Any system that seeks to unify message exchange must be flexible enough to
 capture and encode any current and future needs of messaging applications.
